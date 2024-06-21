@@ -11,7 +11,9 @@
 <body class="bg-light">
   <div class="container">
     <h1 class="my-4 text-center">Les Joies de Wedo</h1>
-    <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#uploadModal">Ajouter</button>
+    <div class="d-flex justify-content-center mb-4">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Ajouter</button>
+    </div>
     <div id="posts" class="row"></div>
   </div>
 
@@ -31,7 +33,10 @@
               <textarea id="text" class="form-control" placeholder="Enter your text" required></textarea>
             </div>
             <div class="form-group">
-              <input type="file" id="file" class="form-control-file" accept="image/*,video/webm" required>
+              <input type="file" id="file" class="form-control-file" accept="image/*,video/webm">
+            </div>
+            <div class="form-group">
+              <input type="url" id="url" class="form-control" placeholder="Or enter a URL">
             </div>
             <button type="submit" class="btn btn-primary btn-block">Upload</button>
           </form>

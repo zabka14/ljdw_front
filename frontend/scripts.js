@@ -5,12 +5,21 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
   const text = document.getElementById('text').value;
   const file = document.getElementById('file').files[0];
+  const url = document.getElementById('url').value;
   const formData = new FormData();
   formData.append('text', text);
-  formData.append('file', file);
+
+  if (file) {
+    formData.append('file', file);
+  } else if (url) {
+    formData.append('url', url);
+  } else {
+    alert('Please select a file or enter a URL.');
+    return;
+  }
 
   try {
-    const response = await fetch(`${backendUrl}/posts`, {
+    const response = await fetch(`${backendUrl}/posts.js`, { // Corrected URL
       method: 'POST',
       body: formData
     });
@@ -32,7 +41,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
 async function fetchPosts() {
   try {
-    const response = await fetch(`${backendUrl}/posts`);
+    const response = await fetch(`${backendUrl}/posts.js`); // Corrected URL
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
