@@ -23,7 +23,8 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
   try {
     const response = await fetch(`${backendUrl}/posts`, {
       method: 'POST',
-      body: formData
+      body: formData,
+      credentials: 'include' // Inclure les cookies de session
     });
 
     if (!response.ok) {
@@ -123,5 +124,30 @@ function setupPagination(totalPages, currentPage) {
     paginationContainer.appendChild(pageItem);
   }
 }
+
+async function checkAuthStatus() {
+  try {
+    const response = await fetch(`${backendUrl}/auth/status`, {
+      credentials: 'include' // Inclure les cookies de session
+    });
+    const data = await response.json();
+    if (data.authenticated) {
+      console.log('User is authenticated', data.user);
+      document.getElementById('auth-status').innerText = `Logged in as ${data.user.displayName}`;
+      document.getElementById('login-btn').style.display = 'none';
+      document.getElementById('logout-btn').style.display = 'block';
+    } else {
+      console.log('User is not authenticated');
+      document.getElementById('auth-status').innerText = 'Not logged in';
+      document.getElementById('login-btn').style.display = 'block';
+      document.getElementById('logout-btn').style.display = 'none';
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Appelez cette fonction au chargement de la page ou à tout moment nécessaire
+checkAuthStatus();
 
 fetchPosts();
