@@ -10,7 +10,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
   formData.append('file', file);
 
   try {
-    const response = await fetch(`${backendUrl}/posts.js`, {
+    const response = await fetch(`${backendUrl}/posts`, { // Corrected URL
       method: 'POST',
       body: formData
     });
@@ -31,7 +31,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
 async function fetchPosts() {
   try {
-    const response = await fetch(`${backendUrl}/posts.js`);
+    const response = await fetch(`${backendUrl}/posts`); // Corrected URL
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -50,7 +50,7 @@ function displayPost(post) {
       <div class="card-body">
         <p class="card-text">${post.text}</p>
         ${post.fileUrl.startsWith('data:video') || post.fileUrl.includes('webm') ? 
-          `<video src="${post.fileUrl}" controls autoplay loop class="card-img-top"></video>` : 
+          `<video src="${post.fileUrl}" class="card-img-top" autoplay loop muted></video>` : 
           `<img src="${post.fileUrl}" class="card-img-top" alt="Image">`}
       </div>
     </div>
