@@ -10,7 +10,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
   formData.append('file', file);
 
   try {
-    const response = await fetch(`${backendUrl}/posts.js`, { // Corrected URL
+    const response = await fetch(`${backendUrl}/posts`, {
       method: 'POST',
       body: formData
     });
@@ -21,9 +21,10 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
     const result = await response.json();
     displayPost(result);
-    
-    // Réinitialiser le formulaire
+
+    // Réinitialiser le formulaire et fermer la modal
     document.getElementById('uploadForm').reset();
+    $('#uploadModal').modal('hide');
   } catch (error) {
     console.error('Error:', error);
   }
@@ -31,7 +32,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
 async function fetchPosts() {
   try {
-    const response = await fetch(`${backendUrl}/posts.js`); // Corrected URL
+    const response = await fetch(`${backendUrl}/posts`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
