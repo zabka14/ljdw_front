@@ -1,5 +1,12 @@
-const backendUrl = 'https://ljdw-back-5sj59lx2y-zabka14s-projects.vercel.app/api';
+const backendUrl = 'https://ljdw-back-zabka14s-projects.vercel.app/api';
 
+// Test de la route CORS
+fetch(`${backendUrl}/test`)
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+
+// Le reste de votre code pour gérer les posts...
 document.getElementById('uploadForm').addEventListener('submit', async (event) => {
   event.preventDefault();
 
