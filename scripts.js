@@ -7,7 +7,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
     formData.append('text', text);
     formData.append('image', image);
 
-    const response = await fetch('https://your-backend-url/api/posts/upload', {
+    const response = await fetch('https://ljdw-back-5sj59lx2y-zabka14s-projects.vercel.app/api/posts.js', {
         method: 'POST',
         body: formData
     });
@@ -17,7 +17,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 });
 
 async function fetchPosts() {
-    const response = await fetch('https://your-backend-url/api/posts');
+    const response = await fetch('https://ljdw-back-5sj59lx2y-zabka14s-projects.vercel.app/api/posts.js');
     const posts = await response.json();
     posts.forEach(displayPost);
 }
