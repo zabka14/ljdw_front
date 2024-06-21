@@ -1,12 +1,5 @@
 const backendUrl = 'https://ljdw-back-zabka14s-projects.vercel.app/api';
 
-// Test de la route CORS
-fetch(`${backendUrl}/test`)
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-
-// Le reste de votre code pour gérer les posts...
 document.getElementById('uploadForm').addEventListener('submit', async (event) => {
   event.preventDefault();
 
@@ -28,6 +21,9 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
     const result = await response.json();
     displayPost(result);
+    
+    // Réinitialiser le formulaire
+    document.getElementById('uploadForm').reset();
   } catch (error) {
     console.error('Error:', error);
   }
@@ -53,8 +49,8 @@ function displayPost(post) {
     <div class="card mb-4 shadow-sm">
       <div class="card-body">
         <p class="card-text">${post.text}</p>
-        ${post.fileUrl.startsWith('data:video') ? 
-          `<video src="${post.fileUrl}" controls class="card-img-top"></video>` : 
+        ${post.fileUrl.startsWith('data:video') || post.fileUrl.includes('webm') ? 
+          `<video src="${post.fileUrl}" controls autoplay loop class="card-img-top"></video>` : 
           `<img src="${post.fileUrl}" class="card-img-top" alt="Image">`}
       </div>
     </div>
