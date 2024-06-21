@@ -1,4 +1,6 @@
 const backendUrl = 'https://ljdw-back-zabka14s-projects.vercel.app/api';
+let currentPage = 1;
+const limit = 6;
 
 document.getElementById('uploadForm').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -42,17 +44,24 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
   }
 });
 
-async function fetchPosts() {
+async function fetchPosts(page = 1) {
   try {
-    const response = await fetch(`${backendUrl}/posts.js`); // Corrected URL
+    const response = await fetch(`${backendUrl}/posts.js?page=${page}&limit=${limit}`); // Corrected URL
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const posts = await response.json();
-    posts.forEach(displayPost);
+    const { posts, totalPages } = await response.json();
+    displayPosts(posts);
+    setupPagination(totalPages, page);
   } catch (error) {
     console.error('Error:', error);
   }
+}
+
+function displayPosts(posts) {
+  const postsContainer = document.getElementById('posts');
+  postsContainer.innerHTML = '';
+  posts.forEach(post => displayPost(post));
 }
 
 function displayPost(post) {
@@ -69,6 +78,22 @@ function displayPost(post) {
     </div>
   `;
   document.getElementById('posts').appendChild(postElement);
+}
+
+function setupPagination(totalPages, currentPage) {
+  const paginationContainer = document.getElementById('pagination');
+  paginationContainer.innerHTML = '';
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageItem = document.createElement('li');
+    pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+    pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+    pageItem.addEventListener('click', (event) => {
+      event.preventDefault();
+      fetchPosts(i);
+    });
+    paginationContainer.appendChild(pageItem);
+  }
 }
 
 fetchPosts();
