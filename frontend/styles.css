@@ -27,3 +27,7 @@ body {
 .text-center {
   text-align: center;
 }
+
+.like-button {
+  cursor: pointer;
+}

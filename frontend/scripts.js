@@ -21,7 +21,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
   }
 
   try {
-    const response = await fetch(`${backendUrl}/posts.js`, { // Corrected URL
+    const response = await fetch(`${backendUrl}/posts.js`, {
       method: 'POST',
       body: formData
     });
@@ -46,7 +46,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
 async function fetchPosts(page = 1) {
   try {
-    const response = await fetch(`${backendUrl}/posts.js?page=${page}&limit=${limit}`); // Corrected URL
+    const response = await fetch(`${backendUrl}/posts.js?page=${page}&limit=${limit}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -74,10 +74,33 @@ function displayPost(post) {
         ${post.fileUrl.startsWith('data:video') || post.fileUrl.includes('webm') ? 
           `<video src="${post.fileUrl}" class="card-img-top" autoplay loop muted></video>` : 
           `<img src="${post.fileUrl}" class="card-img-top" alt="Image">`}
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <button class="btn btn-sm btn-outline-primary like-button" data-id="${post._id}">Like</button>
+          <span class="likes-count">${post.likes} likes</span>
+        </div>
       </div>
     </div>
   `;
   document.getElementById('posts').appendChild(postElement);
+
+  // Ajouter un gestionnaire d'événements pour le bouton like
+  postElement.querySelector('.like-button').addEventListener('click', () => likePost(post._id));
+}
+
+async function likePost(postId) {
+  try {
+    const response = await fetch(`${backendUrl}/posts.js/${postId}/like`, {
+      method: 'POST'
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const updatedPost = await response.json();
+    const postElement = document.querySelector(`.like-button[data-id="${postId}"]`).closest('.post');
+    postElement.querySelector('.likes-count').textContent = `${updatedPost.likes} likes`;
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
 function setupPagination(totalPages, currentPage) {
