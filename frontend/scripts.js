@@ -89,7 +89,7 @@ function displayPost(post) {
 
 async function likePost(postId, newLikes) {
   try {
-    const response = await fetch(`${backendUrl}/posts`, {
+    const response = await fetch(`${backendUrl}/posts/like`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
