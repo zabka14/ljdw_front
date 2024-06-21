@@ -10,7 +10,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
   formData.append('file', file);
 
   try {
-    const response = await fetch(`${backendUrl}/posts`, { // Corrected URL
+    const response = await fetch(`${backendUrl}/posts.js`, { // Corrected URL
       method: 'POST',
       body: formData
     });
@@ -31,7 +31,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
 async function fetchPosts() {
   try {
-    const response = await fetch(`${backendUrl}/posts`); // Corrected URL
+    const response = await fetch(`${backendUrl}/posts.js`); // Corrected URL
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
