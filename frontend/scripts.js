@@ -84,13 +84,17 @@ function displayPost(post) {
   document.getElementById('posts').appendChild(postElement);
 
   // Ajouter un gestionnaire d'événements pour le bouton like
-  postElement.querySelector('.like-button').addEventListener('click', () => likePost(post._id));
+  postElement.querySelector('.like-button').addEventListener('click', () => likePost(post._id, post.likes + 1));
 }
 
-async function likePost(postId) {
+async function likePost(postId, newLikes) {
   try {
     const response = await fetch(`${backendUrl}/posts.js/${postId}/like`, {
-      method: 'POST'
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ likes: newLikes })
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
