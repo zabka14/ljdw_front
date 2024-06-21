@@ -34,6 +34,9 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
     // Réinitialiser le formulaire et fermer la modal
     document.getElementById('uploadForm').reset();
     $('#uploadModal').modal('hide');
+
+    // Forcer le rafraîchissement de la page
+    window.location.reload();
   } catch (error) {
     console.error('Error:', error);
   }
