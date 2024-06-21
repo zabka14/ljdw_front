@@ -94,6 +94,7 @@ async function likePost(postId, newLikes) {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include', // Inclure les cookies de session
       body: JSON.stringify({ id: postId, likes: newLikes })
     });
     if (!response.ok) {
