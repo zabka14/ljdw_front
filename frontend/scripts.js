@@ -89,12 +89,12 @@ function displayPost(post) {
 
 async function likePost(postId, newLikes) {
   try {
-    const response = await fetch(`${backendUrl}/posts.js/${postId}/like`, {
+    const response = await fetch(`${backendUrl}/posts.js`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ likes: newLikes })
+      body: JSON.stringify({ id: postId, likes: newLikes })
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
