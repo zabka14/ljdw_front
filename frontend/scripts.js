@@ -21,7 +21,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
   }
 
   try {
-    const response = await fetch(`${backendUrl}/posts.js`, {
+    const response = await fetch(`${backendUrl}/posts`, {
       method: 'POST',
       body: formData
     });
@@ -46,7 +46,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 
 async function fetchPosts(page = 1) {
   try {
-    const response = await fetch(`${backendUrl}/posts.js?page=${page}&limit=${limit}`);
+    const response = await fetch(`${backendUrl}/posts?page=${page}&limit=${limit}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -89,7 +89,7 @@ function displayPost(post) {
 
 async function likePost(postId, newLikes) {
   try {
-    const response = await fetch(`${backendUrl}/posts.js`, {
+    const response = await fetch(`${backendUrl}/posts`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
