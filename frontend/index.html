@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Joies De Wedo</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Joies de Wedo</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <h1>Les Joies De Wedo</h1>
-    <form id="uploadForm">
-        <textarea id="text" placeholder="Enter your text" required></textarea>
-        <input type="file" id="image" accept="image/*" required>
-        <button type="submit">Upload</button>
+<body class="bg-light">
+  <div class="container">
+    <h1 class="my-4 text-center">Les Joies de Wedo</h1>
+    <form id="uploadForm" class="mb-4">
+      <div class="form-group">
+        <textarea id="text" class="form-control" placeholder="Enter your text" required></textarea>
+      </div>
+      <div class="form-group">
+        <input type="file" id="file" class="form-control-file" accept="image/*,video/webm" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Upload</button>
     </form>
-    <div id="posts"></div>
-    <script src="scripts.js"></script>
+    <div id="posts" class="row"></div>
+  </div>
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>

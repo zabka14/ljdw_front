@@ -1,35 +1,58 @@
+const backendUrl = 'https://ljdw-back-5sj59lx2y-zabka14s-projects.vercel.app/api';
+
 document.getElementById('uploadForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    const text = document.getElementById('text').value;
-    const image = document.getElementById('image').files[0];
-    const formData = new FormData();
-    formData.append('text', text);
-    formData.append('image', image);
+  const text = document.getElementById('text').value;
+  const file = document.getElementById('file').files[0];
+  const formData = new FormData();
+  formData.append('text', text);
+  formData.append('file', file);
 
-    const response = await fetch('https://ljdw-back-5sj59lx2y-zabka14s-projects.vercel.app/api/posts.js', {
-        method: 'POST',
-        body: formData
+  try {
+    const response = await fetch(`${backendUrl}/posts.js`, {
+      method: 'POST',
+      body: formData
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
     const result = await response.json();
     displayPost(result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 });
 
 async function fetchPosts() {
-    const response = await fetch('https://ljdw-back-5sj59lx2y-zabka14s-projects.vercel.app/api/posts.js');
+  try {
+    const response = await fetch(`${backendUrl}/posts.js`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const posts = await response.json();
     posts.forEach(displayPost);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
 function displayPost(post) {
-    const postElement = document.createElement('div');
-    postElement.className = 'post';
-    postElement.innerHTML = `
-        <p>${post.text}</p>
-        <img src="${post.imageUrl}" alt="Image" width="300">
-    `;
-    document.getElementById('posts').appendChild(postElement);
+  const postElement = document.createElement('div');
+  postElement.className = 'col-md-4 post';
+  postElement.innerHTML = `
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <p class="card-text">${post.text}</p>
+        ${post.fileUrl.startsWith('data:video') ? 
+          `<video src="${post.fileUrl}" controls class="card-img-top"></video>` : 
+          `<img src="${post.fileUrl}" class="card-img-top" alt="Image">`}
+      </div>
+    </div>
+  `;
+  document.getElementById('posts').appendChild(postElement);
 }
 
 fetchPosts();
